@@ -11,6 +11,7 @@
 #ifdef CONFIG_USERSPACE
 #include <zephyr/sys/libc-hooks.h>
 #endif
+#include <zephyr/logging/log.h>
 #include <zephyr/logging/log_ctrl.h>
 #include <zephyr/sys/reboot.h>
 
@@ -80,6 +81,10 @@ static void end_report(void)
 	} else {
 		TC_END_REPORT(TC_PASS);
 	}
+
+#if defined(CONFIG_BOARD_PROTOTYPE1) && defined(CONFIG_SOC_SYMBIOT) && defined(CONFIG_HAS_SIMULATION_LOGS)
+	LOG_RAW("$finish");
+#endif // defined(CONFIG_BOARD_PROTOTYPE1) && defined(CONFIG_SOC_SYMBIOT) && defined(CONFIG_HAS_SIMULATION_LOGS)
 }
 
 static int cleanup_test(struct ztest_unit_test *test)
